@@ -4,7 +4,7 @@ The analyses performed here were conducted on data collected by Urban ministries
 
 ### Analysis
 
-Please refer to project_1.html file in results directory.
+Please refer to project_1.md file in results directory.
 
 ### Raw Data
 
