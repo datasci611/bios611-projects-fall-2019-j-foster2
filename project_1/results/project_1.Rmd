@@ -25,12 +25,19 @@ umd_df = read.csv('../data/UMD_Services_Provided_20190719.tsv',sep = '\t',header
 
 #What is the total weight of food provided per year?
 umd_df %>%  
+  #Format data variable
   separate(Date, sep = "/", into = c("Month", "Day", "Year")) %>%
+  #Reduce the dataframe to specific year range and remove Food.Pounds outliers 
   filter(Year >= 2006 & Year <= 2019 & Food.Pounds < 100) %>%
+  #Reduce dataframe to only include two variables
   select(Year,Food.Pounds) %>%
+  #Remove any row with NaN
   drop_na(Food.Pounds) %>%
+  #Group data by year
   group_by(Year) %>%
+  #Find aggregate food provide per year
   summarise(food.give = sum(Food.Pounds)) %>% 
+  #Create bar plot
   ggplot(aes(x = Year, y = food.give)) +
   geom_bar(stat = "identity") +
   labs(x = "Year",
@@ -47,10 +54,15 @@ To understand how much food was being distributed per transaction, I looked at t
 ```{r fig2, fig.height = 5, fig.width = 8, fig.align = "center", echo=FALSE, message=FALSE}
 #What is the average amount of food given per interaction in a given year?
 umd_df %>%  
+  #Format data variable
   separate(Date, sep = "/", into = c("Month", "Day", "Year")) %>%
+  #Reduce the dataframe to specific year range and remove Food.Pounds outliers 
   filter(Year >= 2006 & Year <= 2019, Food.Pounds < 100) %>%
+  #Reduce dataframe to only include two variables
   select(Year,Food.Pounds) %>%
+  #Remvove rows with NaN
   drop_na(Food.Pounds) %>%
+  #Create box plot
   ggplot(aes(x = Year, y = Food.Pounds)) +
   geom_boxplot() +
   labs(x = "Year",
@@ -70,30 +82,39 @@ overall.food <- umd_df %>%
   filter(Year >= 2006 & Year <= 2019, Food.Pounds < 100) %>%
   select(Year,Type.of.Bill.Paid,Food.Pounds) %>%
   drop_na(Food.Pounds)
-
+#Add label for plotting
 overall.food$bill.status <- "no_bill_info"
 
-#Distribution of food the amout of food given our from inividuals
-#paying bills 
+#The amout of food given to individual paying bills
 paid.bill.food <-umd_df %>%  
+  #Format date variable
   separate(Date, sep = "/", into = c("Month", "Day", "Year")) %>%
-  filter(Year > 1983 & Year <= 2019 & Food.Pounds < 100) %>%
+  #Reduce the dataframe to specific year range and remove Food.Pounds outliers 
+  filter(Year >= 2006 & Year <= 2019 & Food.Pounds < 100) %>%
+  #Reduce dataframe to 3 variables
   select(Year,Type.of.Bill.Paid,Food.Pounds) %>%
+  #Remove rows with NaN
   drop_na(Type.of.Bill.Paid) %>%
   drop_na(Food.Pounds) %>%
+  #Remove rows with nothing in cell
   filter(Type.of.Bill.Paid != "")
 
+#Add label for plotting
 paid.bill.food$bill.status <- "paid_bill"
 
+#Concatenate two dataframes
 merge <- rbind(overall.food,paid.bill.food)
 
 merge %>% 
-  filter(Year >= 2005) %>%
+  #Focus on years after 2006
+  filter(Year >= 2006) %>%
+  #Box Plot
   ggplot(aes(x = Year, y = Food.Pounds, fill=bill.status)) +
   geom_boxplot() +
   theme_minimal() +
   labs(y = "Food provided at each transaction (lbs.)",
        face = "bold") + 
+  #Determine if difference of each pairing is statistically significant (Wilcox)
   stat_compare_means( aes(label = ..p.signif..), 
                       label.x = 1.5, label.y = 100)
 ```
