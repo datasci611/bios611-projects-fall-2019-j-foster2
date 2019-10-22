@@ -4,7 +4,7 @@ The dashborad provided here was built to analyze data collected by Urban ministr
 
 ### Dashboard
 
-Please find my dashboard at j-foster2.shinyapps.io
+Please find my dashboard at https://j-foster2.shinyapps.io/project_2/
 
 ### Raw Data
 
