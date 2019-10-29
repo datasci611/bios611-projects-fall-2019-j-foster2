@@ -17,17 +17,17 @@ ui <- fluidPage(
     sidebarPanel(
       
       # Input: variable used for x-axis of violin plot ----
-      sliderInput("year", "Year",
-                  min = 2006, max = 2019, value = c(2010, 2015),sep = ""),
+      sliderInput("year", h4("Year"),
+                  min = 2006, max = 2018, value = c(2010, 2015),sep = ""),
       # Give the user the abilty to toggle between different items provided
-      selectInput("select", h3("Commodity  Provided"), 
-                  choices = list("Food" = 1, "Clothes" = 2,
-                                 "Diapers" = 3), selected = 1),
-      #TODO for final project
-      helpText("For the final version of the dashboard I plan to activate the drop down for the user to choose
-               between food, clothes, and diapers. For each of these items I will provide a figure that
-               shows total amount of a given item provided for a given time period. \n I will also 
-               look to incoporate external data about the number of homeless people in Durham for a give year.")
+      selectInput("service", h4("Commodity  Provided"), 
+                  choices = list("Food" = 1, "Clothes" = 2
+                                 ), selected = 1),
+      #Provide some guidance to the user 
+      helpText("Toggle between food and clothing to explore both annual and monthly trends in 
+               the distribution of these resources. Use the slider above to select the date range of interest.
+               These data are shown along with the average
+               Durham Chapel Hill unemployment rate as recorded by the bureau of labor statistics.")
       
       ),
     
@@ -49,21 +49,15 @@ server <- function(input, output) {
   # renderPlot creates violin plot and links to ui
   output$popPlot <- renderPlot({
     
-    line_plot(input$year)
+    line_plot(input$year, input$service)
     
   })
   
   output$monthPlot <- renderPlot({
     
-    month_plot(input$year, input$plot_click)
+    month_plot(input$year, input$plot_click, input$service)
   })
   
-  # # renderText creates uniqe variable text and links to ui
-  # output$num_unique <- renderText({
-  #   
-  #   unique_features(uncp_df, input$radio)
-  #   
-  #   })
   
 }
 

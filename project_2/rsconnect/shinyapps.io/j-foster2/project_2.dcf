@@ -5,6 +5,9 @@ account: j-foster2
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 1361245
-bundleId: 2523380
+bundleId: 2546298
 url: https://j-foster2.shinyapps.io/project_2/
-when: 1571716438.48686
+when: 1572321406.52337
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: README.md
