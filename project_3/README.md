@@ -28,7 +28,7 @@ durham_chapel_hill_unemployment_rate.txt - stored in data directory - provided b
 
 Dependencies: docker v18.03.1-ce
 
-umd_shelter_analysis.tar.gz
+curl -s https://github.com/datasci611/bios611-projects-fall-2019-j-foster2/blob/master/project_3/repeat_analysis/umd_shelter_analysis.tar.gz -o umd_shelter_analysis.tar.gz
 
 tar -zxvf umd_shelter_analysis.tar.gz
 
