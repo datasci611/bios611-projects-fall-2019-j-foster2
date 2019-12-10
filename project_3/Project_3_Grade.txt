@@ -1,0 +1,11 @@
+** Project 3 Grade
+
+   Average Feedback Score - 15/15
+   Average Presentation Score - 87.5/100
+   Grader Score - 20/30: -10 failed to make target, error message: “gzip: stdin: not in gzip format
+tar: Child returned status 1
+tar: Error is not recoverable: exiting now”
+   
+   Final Grade - 82.08
+
+
